@@ -1,0 +1,22 @@
+maintainer="Luís Fonseca <luis@lhf.pt>"
+pkgname=lhf
+pkgver=1.0.0
+pkgrel=0
+upstream_author="luishfonseca"
+category="misc"
+pkgdesc="Personal scripts for my remarkable"
+url="https://github.com/luishfonseca/rm-scripts"
+arch="noarch"
+license="Unlicense"
+depends="remarkable-os>=3.24"
+source=""
+options="!check !fhs !tracedeps"
+
+package() {
+    mkdir -p "$pkgdir"
+}
+
+postinstall() {
+    echo "hello vellum!"
+}
+sha512sums=""

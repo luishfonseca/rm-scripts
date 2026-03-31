@@ -1,0 +1,25 @@
+name: Build & Publish
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build packages
+        uses: Eeems/vbuild-action@v1
+        with:
+          path: pkg/
+
+      - name: Release
+        run: |
+          gh release delete latest --yes || true
+          gh release create latest pkg/dist/noarch/*.apk --title "Latest" --latest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
