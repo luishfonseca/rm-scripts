@@ -1,0 +1,29 @@
+name: Build & Publish
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install vbuild
+        run: |
+          curl -L https://github.com/Eeems/vbuild/releases/latest/download/vbuild-vbuild-ubuntu \
+            -o /usr/local/bin/vbuild
+          chmod +x /usr/local/bin/vbuild
+
+      - name: Build packages
+        run: VBUILD_DRIVER=docker CARCH=armv7 vbuild -C pkg/ all
+
+      - name: Release
+        run: |
+          gh release delete latest --yes || true
+          gh release create latest pkg/dist/armv7/*.apk --title "Latest" --latest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
