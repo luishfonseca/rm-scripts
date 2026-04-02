@@ -13,7 +13,7 @@ EOF
 	if ! grep lhf_start /etc/hosts ; then
 		cat >> /etc/hosts <<EOF
 # lhf_start
-100.72.172.31 rmfakecloud.tail9db2a.ts.net
+100.123.137.111 rmfakecloud.lhf.pt
 # lhf_end
 EOF
 	fi
